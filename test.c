@@ -6,7 +6,7 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:05:10 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/08 15:44:25 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/09 11:48:49 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ char	*read_line(int fd, char *res)
 	tmp = read_buff(fd);
 	if (!tmp)
 		return (NULL);
+	i = 0;
 	while (tmp[i] && tmp[i] != '\n')
 		i++;
-	if (i != BUFFER_SIZE)
+	if (i != ft_strlen(tmp))
 		return (ft_strjoin(res, tmp));
 	return (read_line(fd, ft_strjoin(res, tmp)));
 }
