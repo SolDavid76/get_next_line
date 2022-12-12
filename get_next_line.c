@@ -3,70 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djanusz <djanusz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 18:00:55 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/08 13:04:46 by djanusz          ###   ########.fr       */
+/*   Created: 2022/12/08 13:05:10 by djanusz           #+#    #+#             */
+/*   Updated: 2022/12/12 14:02:02 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_line(int fd, char *str)
+/*char	*read_buff(int fd, char *res)
 {
-	char	*res;
+	read(fd, res, BUFFER_SIZE);
+	res[BUFFER_SIZE] = '\0';
+	return (res);
+}*/
+
+/*char	*read_line(int fd, char *res)
+{
 	char	*tmp;
 	int		i;
-	int		j;
-
-	tmp = malloc(BUFFER_SIZE);
-	read(fd, tmp, BUFFER_SIZE);
-	res = malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(str) + 1));
-	i = 0;
-	j = 0;
-	while (str[i])
-		res[j++] = str[i++];
+	
+	tmp = read_buff(fd);
+	if (!tmp)
+		return (NULL);
 	i = 0;
 	while (tmp[i] && tmp[i] != '\n')
-		res[j++] = tmp[i++];
-	free(tmp);
-	free(str);
-	return (res);
-}
+		i++;
+	if (i != ft_strlen(tmp))
+		return (ft_strjoin(res, tmp));
+	return (read_line(fd, ft_strjoin(res, tmp)));
+}*/
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
+	char	*stach;
 	char	*res;
+	int		x;
 	int		i;
 
-	res = NULL;
-	res = read_line(fd, res);
-	i = 0;
-	while (res[i])
+	x = 1;
+	res = "";
+	while (x)
 	{
-		if (res[i] == '\n')
-			return (res);
+		read(fd, tmp, BUFFER_SIZE);
+		tmp[BUFFER_SIZE + 1] = '\0';
+		i = 0;
+		while(tmp[i])
+		{
+			if (tmp[i] == '\n')
+				x = 0;
+			i++;
+		}
+		res = ft_strjoin(res, tmp);
 	}
 	return (res);
 }
 
-
-#include <fcntl.h>
 void	ft_putstr(char *str)
 {
 	int	i;
-
+	
 	if (!str)
 		return ;
+	i = 0;
 	while (str[i])
-		i += write(1, str + i, 1);
+	{
+		write(1, str + i, 1);
+		i++;
+	}
+	write(1, "\n", 1);
 }
-
+#include <fcntl.h>
 int	main(void)
 {
-	int	fd_test;
+	int	fd;
+	char *res;
 
-	fd_test = open("test.txt", O_RDONLY);
-	ft_putstr(get_next_line(fd_test));
-	return (0);
+	fd = open("test.txt", O_RDONLY);
+	res = get_next_line(fd);
+	ft_putstr(res);
+	res = get_next_line(fd);
+	ft_putstr(res);
 }
