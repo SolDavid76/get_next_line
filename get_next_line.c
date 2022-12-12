@@ -6,64 +6,45 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:05:10 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/12 14:02:02 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/12 15:31:11 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*char	*read_buff(int fd, char *res)
-{
-	read(fd, res, BUFFER_SIZE);
-	res[BUFFER_SIZE] = '\0';
-	return (res);
-}*/
-
-/*char	*read_line(int fd, char *res)
-{
-	char	*tmp;
-	int		i;
-	
-	tmp = read_buff(fd);
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (tmp[i] && tmp[i] != '\n')
-		i++;
-	if (i != ft_strlen(tmp))
-		return (ft_strjoin(res, tmp));
-	return (read_line(fd, ft_strjoin(res, tmp)));
-}*/
-
 char	*get_next_line(int fd)
 {
-	char	*stach;
-	char	*res;
-	int		x;
-	int		i;
+	char		tmp[BUFFER_SIZE + 1];
+	static char	*stash;
+	char		*line;
+	int			x;
+	int			i;
 
 	x = 1;
-	res = "";
+	if (!stash)
+		stash = "";
 	while (x)
 	{
-		read(fd, tmp, BUFFER_SIZE);
+		if (read(fd, tmp, BUFFER_SIZE) == 0)
+			x = 0;
 		tmp[BUFFER_SIZE + 1] = '\0';
+		stash = ft_strjoin(stash, tmp);
 		i = 0;
-		while(tmp[i])
+		while (stash[i])
 		{
-			if (tmp[i] == '\n')
+			if (stash[i++] == '\n')
 				x = 0;
-			i++;
 		}
-		res = ft_strjoin(res, tmp);
 	}
-	return (res);
+	line = ft_substr(stash, 0, ft_backn(stash));
+	stash = ft_substr(stash, ft_backn(stash) + 1, ft_strlen(stash));
+	return (line);
 }
 
 void	ft_putstr(char *str)
 {
 	int	i;
-	
+
 	if (!str)
 		return ;
 	i = 0;
@@ -83,6 +64,8 @@ int	main(void)
 	fd = open("test.txt", O_RDONLY);
 	res = get_next_line(fd);
 	ft_putstr(res);
-	res = get_next_line(fd);
-	ft_putstr(res);
+	//res = get_next_line(fd);
+	//ft_putstr(res);
+	//res = get_next_line(fd);
+	//ft_putstr(res);
 }
