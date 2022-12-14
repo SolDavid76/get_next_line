@@ -16,7 +16,6 @@ int	ft_strlen(char *str)
 {
 	int	i;
 
-	write(1, "hi", 2);
 	i = 0;
 	while (str[i])
 		i++;
@@ -41,7 +40,9 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	int len1 = ft_strlen(s1);
+	int len2 = ft_strlen(s2);
+	res = malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!res)
 		return (NULL);
 	i = 0;

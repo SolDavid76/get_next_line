@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 	{
 		if (read(fd, tmp, BUFFER_SIZE) == 0)
 			x = 0;
-		tmp[BUFFER_SIZE + 1] = '\0';
+		tmp[BUFFER_SIZE] = '\0';
 		stash = ft_strjoin(stash, tmp);
 		i = 0;
 		while (stash[i])
@@ -64,8 +64,9 @@ int	main(void)
 	fd = open("test.txt", O_RDONLY);
 	res = get_next_line(fd);
 	ft_putstr(res);
+	res = get_next_line(fd);
+	ft_putstr(res);
 	//res = get_next_line(fd);
 	//ft_putstr(res);
-	//res = get_next_line(fd);
-	//ft_putstr(res);
+	free(res);
 }
