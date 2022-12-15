@@ -17,7 +17,7 @@ char	*ft_readstash(int fd, char *str)
 	char	*tmp;
 	int		n;
 
-	tmp = malloc(sizeof(char) * BUFFER_SIZE);
+	tmp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (NULL);
 	n = 1;
@@ -46,45 +46,10 @@ char	*get_next_line(int fd)
 	stash = ft_readstash(fd, stash);
 	if (!stash)
 		return (NULL);
+	line = ft_get_line(stash);
+	stash = ft_cleanstash(stash);
 	return (line);
 }
-
-/*char	*ft_free_return(char **stash)
-{
-	char	*tmp;
-	char	*line;
-
-	tmp = *stash;
-	line = ft_substr(tmp, 0, ft_backn(tmp));
-	*stash = ft_substr(tmp, ft_backn(tmp) + 1, ft_strlen(tmp));
-	return (line);
-}
-
-char	*get_next_line(int fd)
-{
-	char		tmp[BUFFER_SIZE + 1];
-	static char	*stash;
-	int			x;
-	int			i;
-
-	x = 1;
-	if (!stash)
-		stash = "";
-	while (x)
-	{
-		if (read(fd, tmp, BUFFER_SIZE) < 1)
-			x = 0;
-		tmp[BUFFER_SIZE] = '\0';
-		stash = ft_strjoin(stash, tmp);
-		i = 0;
-		while (stash[i])
-		{
-			if (stash[i++] == '\n')
-				x = 0;
-		}
-	}
-	return (ft_free_return(&stash));
-}*/
 
 void	ft_putstr(char *str)
 {
@@ -94,11 +59,7 @@ void	ft_putstr(char *str)
 		return ;
 	i = 0;
 	while (str[i])
-	{
-		write(1, str + i, 1);
-		i++;
-	}
-	write(1, "\n", 1);
+		write(1, str + i++, 1);
 }
 #include <fcntl.h>
 int	main(void)
