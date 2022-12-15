@@ -56,7 +56,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	int len1 = ft_strlen(s1);
-	int len2 = ft_strlen(s2);
+	int len2 = ft_strlen(s2);//jump
 	res = malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!res)
 		return (NULL);
@@ -65,7 +65,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s1[i])
 		res[j++] = s1[i++];
 	i = 0;
-	while (s2[i])
+	while (s2[i])//jump
 		res[j++] = s2[i++];
 	res[j] = '\0';
 	free(s1);
@@ -121,7 +121,7 @@ char	*ft_cleanstash(char *str)
 	j = 0;
 	while (str[i])
 		res[j++] = str[i++];
-	str[j] = '\0';
+	res[j] = '\0';
 	free(str);
 	return(res);
 }
