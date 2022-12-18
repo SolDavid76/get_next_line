@@ -6,7 +6,7 @@
 /*   By: djanusz <djanusz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:02:03 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/15 09:45:06 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/18 16:28:33 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 char	*get_next_line(int fd);
 int		ft_strlen(char *str);
-int 	ft_strchr(char *str, char c);
+int		ft_strchr(char *str, char c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_get_line(char *str);
 char	*ft_endcpy(char *str);

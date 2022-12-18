@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/18 16:27:33 by djanusz           #+#    #+#             */
+/*   Updated: 2022/12/18 16:28:05 by djanusz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
@@ -5,12 +17,12 @@ char	*get_next_line(int fd)
 	static char	tmp[BUFFER_SIZE + 1];
 	char		*line;
 	int			n;
-	
+
 	n = 1;
 	line = NULL;
 	if (ft_strchr(tmp, '\n'))
 		line = ft_endcpy(tmp);
-	while (!ft_strchr(line, '\n') && n != 0) //line -> tmp ?
+	while (!ft_strchr(line, '\n') && n != 0)
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
 		if (n == -1 || n == 0)
