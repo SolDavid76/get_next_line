@@ -6,7 +6,7 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:27:33 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/18 16:28:05 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/19 10:45:02 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(line, '\n') && n != 0)
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
-		if (n == -1 || n == 0)
-		{
-			free(line);
-			return (NULL);
-		}
+		if (n == -1)
+			return (free(line), NULL);
+		if (n == 0)
+			return (line);
 		tmp[n] = '\0';
 		line = ft_strjoin(line, tmp);
 		if (!line)

@@ -6,7 +6,7 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:27:27 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/18 16:34:49 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/19 10:46:53 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_get_line(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	res = malloc(sizeof(char) + (i + 2));
-	if (!str)
+	if (!res)
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '\n')
