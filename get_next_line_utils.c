@@ -6,7 +6,7 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:27:27 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/19 10:46:53 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/22 11:52:26 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,29 +92,27 @@ char	*ft_get_line(char *str)
 		i++;
 	}
 	res[i] = '\0';
-	free(str);
 	return (res);
 }
 
-char	*ft_endcpy(char *str)
+char	*ft_clean(char *str)
 {
+	char	*res;
 	int		i;
 	int		j;
-	char	*res;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
-	str[i] = 42;
-	i++;
-	res = malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (str[i] == '\0')
+		return (free(str), NULL);
+	res = malloc(sizeof(char) * (ft_strlen(str) - i + 2));
 	if (!res)
 		return (NULL);
+	i++;
 	j = 0;
-	while (str[i] && str[i] != '\n')
-		res[j++] = str[i++];
-	if (str[i] == '\n')
+	while (str[i])
 		res[j++] = str[i++];
 	res[j] = '\0';
-	return (res);
+	return (free(str), res);
 }

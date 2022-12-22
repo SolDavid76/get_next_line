@@ -6,41 +6,49 @@
 /*   By: djanusz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:27:33 by djanusz           #+#    #+#             */
-/*   Updated: 2022/12/19 10:45:02 by djanusz          ###   ########.fr       */
+/*   Updated: 2022/12/22 12:31:19 by djanusz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*ft_readstash(int fd, char *str)
 {
-	static char	tmp[BUFFER_SIZE + 1];
-	char		*stash;
-	int			n;
+	int		n;
+	char	*tmp;
 
 	n = 1;
-	stash = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	tmp = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!tmp)
 		return (NULL);
-	if (ft_strchr(tmp, '\n'))
-		stash = ft_endcpy(tmp);
-	while (!ft_strchr(stash, '\n') && n != 0)
+	while (!ft_strchr(str, '\n') && n != 0)
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
 		if (n == -1)
-			return (free(stash), NULL);
+			return (free(tmp), NULL);
 		if (n == 0)
-		{
-			if (ft_strlen(stash) == 0)
-				return (free(stash), NULL); //dumbest thing I'll never do
-			return (stash);
-		}
+			return (free(tmp), str);
 		tmp[n] = '\0';
-		stash = ft_strjoin(stash, tmp);
-		if (!stash)
-			return (NULL);
+		str = ft_strjoin(str, tmp);
 	}
-	return (ft_get_line(stash));
+	return (free(tmp), str);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*stash;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	stash = ft_readstash(fd, stash);
+	if (!stash)
+		return (NULL);
+	line = ft_get_line(stash);
+	stash = ft_clean(stash);
+	if (!line)
+		return (free(stash), NULL);
+	return (line);
 }
 /*
 #include <fcntl.h>
@@ -66,14 +74,13 @@ int	main(void)
 	int		i;
 	char	*res;
 
-	fd = open("test.txt", O_RDONLY);
-	i = 2;
+	fd = open("test", O_RDONLY);
+	i = 1;
 	while (i)
 	{
 		res = get_next_line(fd);
-		ft_putstr(res);
+		i = ft_putstr(res);
 		free(res);
-		i--;
 	}
 }
 */
